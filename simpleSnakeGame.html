@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GAMING WORLD</title>
+	<style type="text/css">
+		body {background-size: 1820px 1000px;}
+		canvas {display: block; margin-right: auto; margin-left: auto;}
+	</style>
+</head>
+<body >
+	<p style="color: #DF0101; text-align: center; font-family: sans-serif;">SIMPLE SNAKE GAME</p>
+
+	<br><br>
+
+	<p style="font-size: 26px; text-align: center;">Score </p>
+
+	<!-- ---------------------------------------------------   show score  --------------------- -->
+	<div>
+		<script type="text/javascript">
+			var score = 0;
+			function updateScore(s) {
+				
+				document.getElementById("myScore").innerHTML = score;
+
+				score = s;
+			};
+		</script>
+		<!--  ***************************************************************************	-->
+
+		<b><center><span id="myScore" value="score" style="font-size: 30px;" ></span></center></b>
+	</div>
+
+</body>
+</html>
+<!-- end of html -->
+
+
+
+<canvas id="gc" width="400" height="400"></canvas>
+<script type="text/javascript">
+
+
+	window.onload=function() {
+		canv=document.getElementById("gc");
+		ctx=canv.getContext("2d");
+		document.addEventListener("keydown",keyPush);
+		setInterval(game,1000/10);
+
+
+	}
+
+//var score = 1;
+
+px=py=10;
+gs=tc=20;
+ax=ay=15;
+xv=yv=0;
+trail=[];
+tail = 5;
+
+function game() {
+	px+=xv;
+	py+=yv;
+	if(px<0) {
+		px= tc-1;
+	}
+	if(px>tc-1) {
+		px= 0;
+	}
+	if(py<0) {
+		py= tc-1;
+	}
+	if(py>tc-1) {
+		py= 0;
+	}
+
+	ctx.fillStyle="#071918";
+	ctx.fillRect(0,0,canv.width,canv.height);
+
+	ctx.fillStyle="blue";
+	for(var i=0;i<trail.length;i++) {
+		ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+		if(trail[i].x==px && trail[i].y==py) {
+			tail = 5;
+			score = 0;
+			updateScore(score);
+			break;
+			//ctx.canv(0,0,canvas.width,canvas.height);
+			
+		}
+
+	}
+
+	trail.push({x:px,y:py});
+
+	while(trail.length>tail) {
+		trail.shift();
+	//score++;
+
+}
+
+if(ax==px && ay==py) {
+	tail++;
+		score++;	// increment score
+		updateScore(score);
+		ax=Math.floor(Math.random()*tc);
+		ay=Math.floor(Math.random()*tc);
+	}
+
+	ctx.fillStyle="red";
+	ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
+}
+//end of funcion game
+
+
+//function for key presses
+function keyPush(evt) {
+	switch(evt.keyCode) {
+		case 65://change key code value to 37 for left arrow button / A 
+		xv=-1;yv=0;
+		break;
+		case 87://change key code value to 38 for up arrow button / W 
+		xv=0;yv=-1;
+		break;
+		case 68://change key code value to 39 for right arrow button / D
+		xv=1;yv=0;
+		break;
+		case 83://change key code value to 40 for down arrow button / S
+		xv=0;yv=1;
+		break;
+	}
+}
+
+//function for pause the game
+function togglePause()
+{
+	if (!paused)
+	{
+		paused = true;
+	} else if (paused)
+	{
+		paused= false;
+	}
+
+}
+
+
+</script>
